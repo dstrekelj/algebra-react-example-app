@@ -24,3 +24,7 @@
 .App__message-container .Message {
   margin: 16px 0;
 }
+
+a.active {
+  color: red;
+}

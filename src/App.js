@@ -4,6 +4,7 @@ import AppContext from "./contexts/AppContext";
 import ChatContext from "./contexts/ChatContext";
 import MessageForm from "./containers/MessageForm";
 import MessageList from "./containers/MessageList";
+import AppRouter from "./pages/AppRouter";
 
 function App() {
   const appContext = useContext(AppContext);
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <ChatContext.Provider value={messageObjects}>
+      <AppRouter />
       <div className="App">
         <header className="App__header">
           <h1>My Chat App {appContext.language}</h1>
