@@ -1,8 +1,8 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import TextInput from "../TextInput";
-import Checkbox from "../Checkbox";
-import FormButton from "../FormButton";
+import TextInput from "../../components/TextInput";
+import Checkbox from "../../components/Checkbox";
+import FormButton from "../../components/FormButton";
 import "./MessageForm.css";
 
 export default function MessageForm({ onSendMessage }) {

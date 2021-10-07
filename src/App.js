@@ -1,23 +1,9 @@
 import "./App.css";
-import MessageForm from "./components/MessageForm";
 import { useContext, useState } from "react";
 import AppContext from "./contexts/AppContext";
 import ChatContext from "./contexts/ChatContext";
-import MessageList from "./components/MessageList";
-
-function greet(greeting, name) {
-  console.log(greeting, name);
-}
-greet('Hello', 'Domagoj');
-
-function withSmile(greetFunction) {
-  return function(greeting, name) {
-    greetFunction(greeting, name);
-    console.log(':)');
-  }
-}
-const smileyGreeting = withSmile(greet);
-smileyGreeting('Hello', 'Domagoj');
+import MessageForm from "./containers/MessageForm";
+import MessageList from "./containers/MessageList";
 
 function App() {
   const appContext = useContext(AppContext);
@@ -56,4 +42,15 @@ function App() {
   );
 }
 
-export default App;
+function withSmile(Component) {
+  return function() {
+    return (
+      <div>
+        <Component />
+        <div>:)</div>
+      </div>
+    );
+  }
+}
+
+export default withSmile(App);
