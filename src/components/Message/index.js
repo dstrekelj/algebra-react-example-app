@@ -1,3 +1,4 @@
+import { Children } from "react";
 import UserInfo from "../UserInfo";
 import UniqueId from "../UniqueId";
 import CurrentDate from "../CurrentDate";
@@ -18,31 +19,40 @@ export default function Message({
       <div className="Message__title">{title}</div>
       <div className="Message__text">{message}</div>
       {children}
-      <div className="Message__author"><UserInfo /></div>
-      <div className="Message__id"><UniqueId /></div>
-      <div className="Message__date"><CurrentDate /></div>
     </div>
   );
 }
 
 function withUserInfo(Component) {
   return function (props) {
-    console.log('withUserInfo', props);
-    return <Component {...props}>withUserInfo</Component>;
+    const children = [
+      ...Children.toArray(props.children),
+      <UserInfo key="user-info" />
+    ];
+
+    return <Component {...props}>{children}</Component>;
   };
 }
 
 function withUniqueId(Component) {
   return function (props) {
-    console.log('withUniqueId', props);
-    return <Component {...props}>withUniqueId</Component>;
+    const children = [
+      ...Children.toArray(props.children),
+      <UniqueId key="unique-id" />
+    ];
+
+    return <Component {...props}>{children}</Component>;
   };
 }
 
 function withCurrentDate(Component) {
   return function (props) {
-    console.log('withCurrentDate', props);
-    return <Component {...props} />;
+    const children = [
+      ...Children.toArray(props.children),
+      <CurrentDate key="current-date" />
+    ];
+
+    return <Component {...props}>{children}</Component>;
   };
 }
 
