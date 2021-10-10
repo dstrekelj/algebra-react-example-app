@@ -1,5 +1,19 @@
-import React from "react";
+import { createContext, useState } from "react";
 
-const ChatContext = React.createContext("ChatContext");
+const ChatContext = createContext("ChatContext");
+
+export function ChatContextProvider({ children }) {
+  const [messageObjects, setMessageObjects] = useState([]);
+
+  const handleSendMessage = (messageObject) => {
+    setMessageObjects([ ...messageObjects, messageObject ]);
+  }
+
+  return (
+    <ChatContext.Provider value={{ messageObjects, handleSendMessage }}>
+      {children}
+    </ChatContext.Provider>
+  )
+}
 
 export default ChatContext;

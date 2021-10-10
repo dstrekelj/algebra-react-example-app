@@ -1,21 +1,24 @@
 import { useContext } from "react";
 import ChatContext from "../../contexts/ChatContext";
 import { MessageWithHoc as Message } from "../../components/Message";
+import "./MessageList.css";
 
 export default function MessageList() {
-  const messageObjects = useContext(ChatContext);
-  console.log(messageObjects);
+  const chatContext = useContext(ChatContext);
 
   return (
     <div className="MessageList">
-      {messageObjects.length === 0 && <p>No messages</p>}
-      {messageObjects.map((messageObject, index) =>
-        <Message
-          key={index}
-          isImportant={messageObject.isImportant}
-          message={messageObject.message}
-          title={messageObject.title}
-        />
+      {chatContext.messageObjects.length === 0 &&
+        <div className="MessageList__item">No messages</div>
+      }
+      {chatContext.messageObjects.map((messageObject, index) =>
+        <div className="MessageList__item" key={index}>
+          <Message
+            isImportant={messageObject.isImportant}
+            message={messageObject.message}
+            title={messageObject.title}
+          />
+        </div>
       )}
     </div>
   )

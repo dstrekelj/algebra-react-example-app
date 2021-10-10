@@ -1,6 +1,6 @@
 .FormButton {
-  height: 40px;
-  border-radius: 8px;
+  height: 2rem;
+  border-radius: 0;
   background-color: red;
   border: none;
   display: block;
