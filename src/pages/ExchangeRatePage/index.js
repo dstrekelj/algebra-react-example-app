@@ -5,10 +5,10 @@ const client = new ApolloClient({
   uri: 'https://48p1r2roz4.sse.codesandbox.io'
 });
 
-function ExchangeRates() {
+function ExchangeRates({ currency, limit }) {
   const { data, loading, error} = useQuery(gql(`
   {
-    rates(currency: "EUR") {
+    rates(currency: "${currency}") {
       currency
       rate
     }
@@ -20,9 +20,9 @@ function ExchangeRates() {
 
   return (
     <div>
-      <div>Tečaj za EUR</div>
+      <div>Tečaj za {currency}</div>
       <ul>
-        {data.rates.map((item) =>
+        {data.rates.slice(0, limit).map((item) =>
           <li key={item.currency}>
             {item.currency}: {item.rate}
           </li>
@@ -37,7 +37,8 @@ export default function ExchangeRatePage() {
     <ApolloProvider client={client}>
       <div className="ExchangeRatePage">
         <h1>Exchange Rate</h1>
-        <ExchangeRates />
+        <ExchangeRates currency="EUR" limit={10} />
+        <ExchangeRates currency="HRK" limit={5} />
       </div>
     </ApolloProvider>
   );
