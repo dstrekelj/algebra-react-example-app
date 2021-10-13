@@ -5,15 +5,12 @@ import reducer, { addOrderItem } from '../../reducers/OrderReducer';
 const orderStore = createStore(reducer);
 
 function OrderForm() {
-  const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
     dispatch(addOrderItem({ text: "Hrana" }));
   }
-
-  console.log(state);
 
   return (
     <form onSubmit={handleOnSubmit}>
@@ -22,11 +19,24 @@ function OrderForm() {
   );
 }
 
+function OrderList() {
+  const state = useSelector((state) => state);
+
+  return (
+    <div>
+      {state.map((item, index) =>
+        <div key={index}>{item.text}</div>
+      )}
+    </div>
+  )
+}
+
 export default function OrderPage() {
   return (
     <Provider store={orderStore}>
       <div className="OrderPage">
         <h1>Order food</h1>
+        <OrderList />
         <OrderForm />
       </div>
     </Provider>
