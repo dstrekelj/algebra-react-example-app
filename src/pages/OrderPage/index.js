@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { createStore } from 'redux';
+import { useEffect, useState } from 'react';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import reducer, { addOrderItem } from '../../reducers/OrderReducer';
+import thunk from 'redux-thunk';
+import reducer, { addOrderItem, sendJokeRequest } from '../../reducers/OrderReducer';
 
-const orderStore = createStore(reducer);
+const orderStore = createStore(reducer, applyMiddleware(thunk));
 
 function OrderForm() {
   const [state, setState] = useState({ text: '' });
@@ -27,10 +28,20 @@ function OrderForm() {
 }
 
 function OrderList() {
-  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.items);
+  const joke = useSelector((state) => ({
+    response: state.jokeResponse,
+    error: state.jokeError
+  }));
+
+  useEffect(() => {
+    dispatch(sendJokeRequest());
+  }, [dispatch]);
 
   return (
     <div>
+      {joke.response !== null && <div>{joke.response.value}</div>}
       {state.map((item, index) =>
         <div key={index}>{item.text}</div>
       )}
